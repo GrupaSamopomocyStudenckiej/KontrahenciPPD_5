@@ -1,6 +1,9 @@
 ﻿using System;
 using static KontrahenciPPD_5.Firma.Firma_BIN;
 using static KontrahenciPPD_5.Firma.Firma_F;
+using static KontrahenciPPD_5.Pracownik.Pracownik_BIN;
+using static KontrahenciPPD_5.Pracownik.Pracownik_F;
+
 
 namespace KontrahenciPPD_5
 {
@@ -24,8 +27,8 @@ namespace KontrahenciPPD_5
                     ShowMenuFirmy(DatabasePathFirm);
                     return true;
                 case "2":
-                    // ShowPracownicy();
-                    // ShowMenuPracownicy();
+                    ShowPracownicy(DatabasePathPracownikow);
+                    ShowMenuPracownicy(DatabasePathPracownikow);
                     return true;
                 case "0":
                     Environment.Exit(0);
@@ -41,6 +44,7 @@ namespace KontrahenciPPD_5
         public static void Main()
         {
             FirstRunFirmy(DatabasePathFirm);
+            FirstRunPracownicy(DatabasePathPracownikow);
             ShowMenuGlowne();
         }
 

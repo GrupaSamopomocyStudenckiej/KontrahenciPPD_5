@@ -9,14 +9,14 @@ namespace KontrahenciPPD_5.Firma
 {
     class Firma_F
     {
-        public static void ShowFirmy(String DatabasePath)
+        public static void ShowFirmy(String DatabasePathFirm)
         {
             try
             {
                 Console.Clear();
                 Console.WriteLine("Firmy:");
                 List<Firma> firmy = new List<Firma>();
-                firmy = DeserializeFirmy(DatabasePath);
+                firmy = DeserializeFirmy(DatabasePathFirm);
 
                 foreach (Firma firma in firmy) // zmienna do wyszukania 
                 {

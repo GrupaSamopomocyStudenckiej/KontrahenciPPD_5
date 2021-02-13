@@ -8,7 +8,7 @@ using System.Text;
 namespace KontrahenciPPD_5.Firma
 {
     class Firma_BIN
-    {
+    {   // Tworzenie "bazowego" pliku z przykładowymi danymi
         public static void FirstRunFirmy(string DatabasePathFirm)
         {
             try
@@ -37,6 +37,7 @@ namespace KontrahenciPPD_5.Firma
             }
         }
 
+        // Zapis firm do pliku - każda firma zajmuje 1024 bajty
         public static void SerializeFirmy(String DatabasePathFirm, List<Firma> ListaFirm)
         {
             foreach (Firma firma in ListaFirm)
@@ -56,6 +57,7 @@ namespace KontrahenciPPD_5.Firma
             }
         }
 
+        // Zapis pojedynczej firmy do pliku
         public static void SerializeFirma(String DatabasePathFirm, Firma firma)
         {
             using (Stream fs = new FileStream(DatabasePathFirm, FileMode.Append, FileAccess.Write, FileShare.None))
@@ -72,6 +74,7 @@ namespace KontrahenciPPD_5.Firma
             }
         }
 
+        // Odczyt wszystkich firm z pliku
         public static List<Firma> DeserializeFirmy(String DatabasePathFirm)
         {
             List<Firma> ListaFirmy = new List<Firma>();
@@ -99,6 +102,7 @@ namespace KontrahenciPPD_5.Firma
             return ListaFirmy;
         }
 
+        // Odczyt pojedynczej firmy z pliku
         public static Firma DeserializeFirma(String DatabasePathFirm, string id_firmy)
         {
             List<Firma> ListaFirmy = new List<Firma>();
@@ -136,6 +140,7 @@ namespace KontrahenciPPD_5.Firma
             return firma;
         }
 
+        // Utworzenie nowego pliku dla firm na podstawie edycji pliku pierwotnego (chyba?)
         public static void PrzepisanieFirm(string DatabasePathFirm, string id_firmy, Firma nowa_firma)
         {
             List<Firma> ListaFirmyStare = DeserializeFirmy(DatabasePathFirm);
@@ -158,6 +163,8 @@ namespace KontrahenciPPD_5.Firma
             SerializeFirmy(DatabasePathFirm, ListaFirmyNowe);
         }
 
+
+        // Usunięcie firmy z pliku
         public static void UsuniecieFirmy(string DatabasePathFirm, string id_firmy)
         {
             List<Firma> ListaFirmyStare = DeserializeFirmy(DatabasePathFirm);
@@ -171,18 +178,11 @@ namespace KontrahenciPPD_5.Firma
                 }
             }
 
-            string DTStamp = DateTime.Now.ToString();
-
-
             File.Move(DatabasePathFirm, DatabasePathFirm + "." + DateTime.Now.ToString("ddMMyyyyHHmmss"));
             FileStream create = new FileStream(DatabasePathFirm, FileMode.Create, FileAccess.Write, FileShare.None);
             create.Close();
 
             SerializeFirmy(DatabasePathFirm, ListaFirmyNowe);
         }
-
-
-
-
     }
 }
