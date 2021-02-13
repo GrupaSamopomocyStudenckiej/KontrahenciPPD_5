@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using WindowsInput;
 using static KontrahenciPPD_5.Pracownik.Pracownik_BIN;
@@ -7,7 +8,7 @@ using static KontrahenciPPD_5.Program;
 
 namespace KontrahenciPPD_5.Pracownik
 {
-    class Pracownik_F
+    class Pracownik_F 
     {
         public static void ShowPracownicy(string DatabasePathPracownikow)
         {
@@ -18,7 +19,9 @@ namespace KontrahenciPPD_5.Pracownik
                 List<Pracownik> pracownicy = new List<Pracownik>();
                 pracownicy = DeserializePracownicy(DatabasePathPracownikow);
 
-                foreach (Pracownik pracownik in pracownicy) // zmienna do wyszukania 
+                List<Pracownik> pracownicyPosortowani = pracownicy.OrderBy(x => Int32.Parse(x.IdPracownika)).ToList();
+
+                foreach (Pracownik pracownik in pracownicyPosortowani) // zmienna do wyszukania 
                 {
                     Console.WriteLine(pracownik.IdPracownika + ". " + pracownik.Imie + " " + pracownik.Nazwisko);
                 }
@@ -36,7 +39,7 @@ namespace KontrahenciPPD_5.Pracownik
             Console.WriteLine("2) Wyświetl dane pracownika");
             Console.WriteLine("3) Zmień dane pracownika");
             Console.WriteLine("4) Usuń pracownika");
-            Console.WriteLine("5) Wyświetl sortowane po nazwisku");
+            Console.WriteLine("5) Wyświetl sortowane po...");
             Console.WriteLine("9) Wróć do menu głównego");
             Console.WriteLine("0) Wyjście");
             Console.Write("\r\nWybrano opcje: ");
@@ -59,8 +62,25 @@ namespace KontrahenciPPD_5.Pracownik
                     ShowMenuPracownicy(DatabasePathPracownikow);
                     return true;
                 case "5":
-                    SortowaniePracownikowPoNazwisku(DatabasePathPracownikow);
-                    ShowMenuPracownicy(DatabasePathPracownikow);
+                    Console.WriteLine("1) ... nazwisku");
+                    Console.WriteLine("2) ... imieniu");
+                    Console.WriteLine("3) ... ID pracownika");
+
+                    switch (Console.ReadLine())
+                    {
+                        case "1":
+                            SortowaniePracownikowPoNazwisku(DatabasePathPracownikow);
+                            ShowMenuPracownicy(DatabasePathPracownikow);
+                            return true;
+                        case "2":
+                            SortowaniePracownikowPoImieniu(DatabasePathPracownikow);
+                            ShowMenuPracownicy(DatabasePathPracownikow);
+                            return true;
+                        case "3":
+                            SortowaniePracownikowPoID(DatabasePathPracownikow);
+                            ShowMenuPracownicy(DatabasePathPracownikow);
+                            return true;
+                    }
                     return true;
                 case "9":
                     ShowMenuGlowne();
@@ -153,7 +173,7 @@ namespace KontrahenciPPD_5.Pracownik
                 pracownikNowy.IdPracownika = Console.ReadLine();
 
                 Console.Write("ID firmy: ");
-                if(pracownikRead.IdFirmy.Length != 0)
+                if (pracownikRead.IdFirmy.Length != 0)
                 {
                     sim.Keyboard.TextEntry(pracownikRead.IdFirmy);
                 }
