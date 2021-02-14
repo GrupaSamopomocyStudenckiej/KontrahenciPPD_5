@@ -31,6 +31,7 @@ namespace KontrahenciPPD_5
             SerializeFirmy(DatabasePathFirm, ListaFirmyNowe);
         }
 
+        //Usunięcie pracownika z pliku
         public static void UsunieciePracownika(string DatabasePathPracownikow, string id_pracownika)
         {
             List<Pracownik> ListaPracownicyStare = DeserializePracownicy(DatabasePathPracownikow);

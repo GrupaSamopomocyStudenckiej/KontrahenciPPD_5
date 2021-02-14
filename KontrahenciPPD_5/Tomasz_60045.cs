@@ -63,7 +63,7 @@ namespace KontrahenciPPD_5
 
         }
 
-        // Rosnące sortowanie pracowników według numeru telefonu
+        // Rosnące sortowanie pracowników według ID pracownika
         public static void SortowaniePracownikowPoID(string DatabasePathPracownikow)
         {
             List<Pracownik> ListaPracownicy = DeserializePracownicy(DatabasePathPracownikow);

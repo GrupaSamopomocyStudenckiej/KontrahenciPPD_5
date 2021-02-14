@@ -21,9 +21,9 @@ namespace KontrahenciPPD_5
                     FileStream create = new FileStream(DatabasePathPracownikow, FileMode.Create, FileAccess.Write, FileShare.None);
                     create.Close();
 
-                    Pracownik pracownik1 = new Pracownik("1", "3", "weqqw", "jhgjhgh", "1234569", "123@sdf.jon");
-                    Pracownik pracownik2 = new Pracownik("2", "2", "dsadas", "dsadasd", "1234569", "123@sdf.jon");
-                    Pracownik pracownik3 = new Pracownik("3", "1", "weqqw", "cxzcxzzxc", "1234569", "123@sdf.jon");
+                    Pracownik pracownik1 = new Pracownik("1", "3", "Jan", "Kowalski", "145674568", "Kowalski@sdf.jon");
+                    Pracownik pracownik2 = new Pracownik("2", "2", "Maria", "Nowak", "585212689", "Nowak@sdf.jon");
+                    Pracownik pracownik3 = new Pracownik("3", "1", "Justyna", "Rokita", "526320148", "Rokita@sdf.jon");
 
                     List<Pracownik> ListaPracownikow = new List<Pracownik>();
                     ListaPracownikow.Add(pracownik1);
@@ -31,7 +31,6 @@ namespace KontrahenciPPD_5
                     ListaPracownikow.Add(pracownik3);
 
                     SerializePracownikow(DatabasePathPracownikow, ListaPracownikow);
-
                 }
             }
             catch (Exception e)
@@ -107,13 +106,6 @@ namespace KontrahenciPPD_5
                 return pracownik;
             }
         }
-
-        // Utworzenie nowego pliku dla pracowników na podstawie edycji pliku pierwotnego (chyba?)
-        
-
-
-        //Usunięcie pracownika z pliku
-        
     }
 }
 

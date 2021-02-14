@@ -132,6 +132,7 @@ namespace KontrahenciPPD_5
             }
         }
 
+        // Utworzenie nowego pliku dla pracowników na podstawie edycji pliku pierwotnego (chyba?)
         public static void PrzepisaniePracownikow(string DatabasePathPracownikow, string id_pracownika, Pracownik nowy_pracownik)
         {
             List<Pracownik> ListaPracownicyStare = DeserializePracownicy(DatabasePathPracownikow);
