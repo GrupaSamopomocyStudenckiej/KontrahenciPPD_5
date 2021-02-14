@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using static KontrahenciPPD_5.Firma.Firma_BIN;
 using static KontrahenciPPD_5.Firma.Firma_F;
 using static KontrahenciPPD_5.Pracownik.Pracownik_BIN;
@@ -43,6 +44,19 @@ namespace KontrahenciPPD_5
 
         public static void Main()
         {
+            try
+            {
+                if (!Directory.Exists("c:\\kontrahenci"))
+                {
+                    DirectoryInfo di = Directory.CreateDirectory("c:\\kontrahenci");
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The process failed: {0}", e.ToString());
+            }
+
+
             FirstRunFirmy(DatabasePathFirm);
             FirstRunPracownicy(DatabasePathPracownikow);
             ShowMenuGlowne();

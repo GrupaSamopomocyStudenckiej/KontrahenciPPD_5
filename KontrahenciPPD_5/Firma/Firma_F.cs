@@ -72,6 +72,8 @@ namespace KontrahenciPPD_5.Firma
 
         static void DodajFirme(String DatabasePathFirm)
         {
+            Console.Clear();
+
             Firma firmyNowy = new Firma();
 
             Console.WriteLine("Podaj ID firmy: ");
