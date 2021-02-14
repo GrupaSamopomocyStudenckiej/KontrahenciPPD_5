@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace KontrahenciPPD_5.Firma
+namespace KontrahenciPPD_5
 {
     [Serializable]
     class Firma

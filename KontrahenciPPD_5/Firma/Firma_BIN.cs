@@ -5,7 +5,11 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
-namespace KontrahenciPPD_5.Firma
+using static KontrahenciPPD_5.Szymon_60024;
+
+
+
+namespace KontrahenciPPD_5
 {
     class Firma_BIN
     {   // Tworzenie "bazowego" pliku z przykładowymi danymi
@@ -37,42 +41,7 @@ namespace KontrahenciPPD_5.Firma
             }
         }
 
-        // Zapis firm do pliku - każda firma zajmuje 1024 bajty
-        public static void SerializeFirmy(String DatabasePathFirm, List<Firma> ListaFirm)
-        {
-            foreach (Firma firma in ListaFirm)
-            {
-                using (Stream fs = new FileStream(DatabasePathFirm, FileMode.Append, FileAccess.Write, FileShare.None))
-                {
-                    byte[] buff = new byte[1024];
-                    Array.Clear(buff, 0, buff.Length);
-
-                    using (MemoryStream ms = new MemoryStream(buff))
-                    {
-                        IFormatter formatter = new BinaryFormatter();
-                        formatter.Serialize(ms, firma);
-                        ms.WriteTo(fs);
-                    }
-                }
-            }
-        }
-
-        // Zapis pojedynczej firmy do pliku
-        public static void SerializeFirma(String DatabasePathFirm, Firma firma)
-        {
-            using (Stream fs = new FileStream(DatabasePathFirm, FileMode.Append, FileAccess.Write, FileShare.None))
-            {
-                byte[] buff = new byte[1024];
-                Array.Clear(buff, 0, buff.Length);
-
-                using (MemoryStream ms = new MemoryStream(buff))
-                {
-                    IFormatter formatter = new BinaryFormatter();
-                    formatter.Serialize(ms, firma);
-                    ms.WriteTo(fs);
-                }
-            }
-        }
+      
 
         // Odczyt wszystkich firm z pliku
         public static List<Firma> DeserializeFirmy(String DatabasePathFirm)
@@ -138,51 +107,6 @@ namespace KontrahenciPPD_5.Firma
             }
 
             return firma;
-        }
-
-        // Utworzenie nowego pliku dla firm na podstawie edycji pliku pierwotnego (chyba?)
-        public static void PrzepisanieFirm(string DatabasePathFirm, string id_firmy, Firma nowa_firma)
-        {
-            List<Firma> ListaFirmyStare = DeserializeFirmy(DatabasePathFirm);
-            List<Firma> ListaFirmyNowe = new List<Firma>();
-
-            foreach (Firma firmaLoop in ListaFirmyStare)
-            {
-                if (!firmaLoop.IdFirmy.Contains(id_firmy))
-                {
-                    ListaFirmyNowe.Add(firmaLoop);
-                }
-            }
-
-            ListaFirmyNowe.Add(nowa_firma);
-
-            File.Move(DatabasePathFirm, DatabasePathFirm + "." + DateTime.Now.ToString("ddMMyyyyHHmmss"));
-            FileStream create = new FileStream(DatabasePathFirm, FileMode.Create, FileAccess.Write, FileShare.None);
-            create.Close();
-
-            SerializeFirmy(DatabasePathFirm, ListaFirmyNowe);
-        }
-
-
-        // Usunięcie firmy z pliku
-        public static void UsuniecieFirmy(string DatabasePathFirm, string id_firmy)
-        {
-            List<Firma> ListaFirmyStare = DeserializeFirmy(DatabasePathFirm);
-            List<Firma> ListaFirmyNowe = new List<Firma>();
-
-            foreach (Firma firmaLoop in ListaFirmyStare)
-            {
-                if (!firmaLoop.IdFirmy.Contains(id_firmy))
-                {
-                    ListaFirmyNowe.Add(firmaLoop);
-                }
-            }
-
-            File.Move(DatabasePathFirm, DatabasePathFirm + "." + DateTime.Now.ToString("ddMMyyyyHHmmss"));
-            FileStream create = new FileStream(DatabasePathFirm, FileMode.Create, FileAccess.Write, FileShare.None);
-            create.Close();
-
-            SerializeFirmy(DatabasePathFirm, ListaFirmyNowe);
         }
     }
 }

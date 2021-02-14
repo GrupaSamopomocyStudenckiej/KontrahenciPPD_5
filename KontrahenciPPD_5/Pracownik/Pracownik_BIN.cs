@@ -5,8 +5,9 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using static KontrahenciPPD_5.Szymon_60024;
 
-namespace KontrahenciPPD_5.Pracownik
+namespace KontrahenciPPD_5
 {
     class Pracownik_BIN
     {
@@ -39,42 +40,7 @@ namespace KontrahenciPPD_5.Pracownik
             }
         }
 
-        // Odczyt wszystkich pracowników do pliku
-        public static void SerializePracownikow(String DatabasePathPracownikow, List<Pracownik> ListaPracownikow)
-        {
-            foreach (Pracownik pracownik in ListaPracownikow)
-            {
-                using (Stream fs = new FileStream(DatabasePathPracownikow, FileMode.Append, FileAccess.Write, FileShare.None))
-                {
-                    byte[] buff = new byte[1024];
-                    Array.Clear(buff, 0, buff.Length);
-
-                    using (MemoryStream ms = new MemoryStream(buff))
-                    {
-                        IFormatter formatter = new BinaryFormatter();
-                        formatter.Serialize(ms, pracownik);
-                        ms.WriteTo(fs);
-                    }
-                }
-            }
-        }
-
-        // Odczyt pojedynczego pracownika z pliku
-        public static void SerializePracownik(String DatabasePathPracownikow, Pracownik pracownik)
-        {
-            using (Stream fs = new FileStream(DatabasePathPracownikow, FileMode.Append, FileAccess.Write, FileShare.None))
-            {
-                byte[] buff = new byte[1024];
-                Array.Clear(buff, 0, buff.Length);
-
-                using (MemoryStream ms = new MemoryStream(buff))
-                {
-                    IFormatter formatter = new BinaryFormatter();
-                    formatter.Serialize(ms, pracownik);
-                    ms.WriteTo(fs);
-                }
-            }
-        }
+        
 
         // Zapis pracowników do pliku
         public static List<Pracownik> DeserializePracownicy(String DatabasePathPracownikow)
@@ -143,121 +109,11 @@ namespace KontrahenciPPD_5.Pracownik
         }
 
         // Utworzenie nowego pliku dla pracowników na podstawie edycji pliku pierwotnego (chyba?)
-        public static void PrzepisaniePracownikow(string DatabasePathPracownikow, string id_pracownika, Pracownik nowy_pracownik)
-        {
-            List<Pracownik> ListaPracownicyStare = DeserializePracownicy(DatabasePathPracownikow);
-            List<Pracownik> ListaPracownicyNowe = new List<Pracownik>();
-
-            foreach (Pracownik pracownikLoop in ListaPracownicyStare)
-            {
-                if (!pracownikLoop.IdPracownika.Contains(id_pracownika))
-                {
-                    ListaPracownicyNowe.Add(pracownikLoop);
-                }
-            }
-
-            ListaPracownicyNowe.Add(nowy_pracownik);
-
-            File.Move(DatabasePathPracownikow, DatabasePathPracownikow + "." + DateTime.Now.ToString("ddMMyyyyHHmmss"));
-            FileStream create = new FileStream(DatabasePathPracownikow, FileMode.Create, FileAccess.Write, FileShare.None);
-            create.Close();
-
-            SerializePracownikow(DatabasePathPracownikow, ListaPracownicyNowe);
-        }
+        
 
 
         //Usunięcie pracownika z pliku
-        public static void UsunieciePracownika(string DatabasePathPracownikow, string id_pracownika)
-        {
-            List<Pracownik> ListaPracownicyStare = DeserializePracownicy(DatabasePathPracownikow);
-            List<Pracownik> ListaPracownicyNowe = new List<Pracownik>();
-
-            foreach (Pracownik pracownikLoop in ListaPracownicyStare)
-            {
-                if (!pracownikLoop.IdPracownika.Contains(id_pracownika))
-                {
-                    ListaPracownicyNowe.Add(pracownikLoop);
-                }
-            }
-
-            File.Move(DatabasePathPracownikow, DatabasePathPracownikow + "." + DateTime.Now.ToString("ddMMyyyyHHmmss"));
-            FileStream create = new FileStream(DatabasePathPracownikow, FileMode.Create, FileAccess.Write, FileShare.None);
-            create.Close();
-
-            SerializePracownikow(DatabasePathPracownikow, ListaPracownicyNowe);
-        }
-
-
-        // Rosnące sortowanie pracowników według nazwiska
-        public static void SortowaniePracownikowPoNazwisku(string DatabasePathPracownikow)
-        {
-            List<Pracownik> ListaPracownicy = DeserializePracownicy(DatabasePathPracownikow);
-
-            ListaPracownicy.Sort(
-            delegate (Pracownik p1, Pracownik p2)
-             {
-                 int compareDate = p1.Nazwisko.CompareTo(p2.Nazwisko);
-                 if (compareDate == 0)
-                 {
-                     return p2.Nazwisko.CompareTo(p1.Nazwisko);
-                 }
-                 return compareDate;
-             }
-            );
-
-            Console.Clear();
-            Console.WriteLine("Pracownicy:");
-
-            foreach (Pracownik pracownik in ListaPracownicy) // zmienna do wyszukania 
-            {
-                Console.WriteLine(pracownik.IdPracownika + ". " + pracownik.Imie + " " + pracownik.Nazwisko);
-            }
-
-        }
-
-        // Rosnące sortowanie pracowników według imienia
-        public static void SortowaniePracownikowPoImieniu(string DatabasePathPracownikow)
-        {
-            List<Pracownik> ListaPracownicy = DeserializePracownicy(DatabasePathPracownikow);
-
-            ListaPracownicy.Sort(
-            delegate (Pracownik p1, Pracownik p2)
-            {
-                int compareDate = p1.Imie.CompareTo(p2.Imie);
-                if (compareDate == 0)
-                {
-                    return p2.Imie.CompareTo(p1.Imie);
-                }
-                return compareDate;
-            }
-            );
-
-            Console.Clear();
-            Console.WriteLine("Pracownicy:");
-
-            foreach (Pracownik pracownik in ListaPracownicy) // zmienna do wyszukania 
-            {
-                Console.WriteLine(pracownik.IdPracownika + ". " + pracownik.Imie + " " + pracownik.Nazwisko);
-            }
-
-        }
-
-        // Rosnące sortowanie pracowników według numeru telefonu
-        public static void SortowaniePracownikowPoID(string DatabasePathPracownikow)
-        {
-            List<Pracownik> ListaPracownicy = DeserializePracownicy(DatabasePathPracownikow);
-
-            List<Pracownik> pracownicyPosortowani = ListaPracownicy.OrderBy(x => Int32.Parse(x.IdPracownika)).ToList();
-
-            Console.Clear();
-            Console.WriteLine("Pracownicy:");
-
-            foreach (Pracownik pracownik in pracownicyPosortowani) // zmienna do wyszukania 
-            {
-                Console.WriteLine(pracownik.IdPracownika + ". " + pracownik.Imie + " " + pracownik.Nazwisko);
-            }
-
-        }
+        
     }
 }
 

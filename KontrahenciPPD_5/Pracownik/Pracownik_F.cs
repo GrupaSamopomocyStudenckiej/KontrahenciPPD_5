@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using WindowsInput;
-using static KontrahenciPPD_5.Pracownik.Pracownik_BIN;
+using static KontrahenciPPD_5.Pracownik_BIN;
 using static KontrahenciPPD_5.Program;
+using static KontrahenciPPD_5.Michal_60039;
+using static KontrahenciPPD_5.Tomasz_60045;
+using static KontrahenciPPD_5.Ewa_60035;
+using static KontrahenciPPD_5.Szymon_60024;
 
-namespace KontrahenciPPD_5.Pracownik
+
+
+namespace KontrahenciPPD_5
 {
     class Pracownik_F 
     {
@@ -95,33 +101,6 @@ namespace KontrahenciPPD_5.Pracownik
             }
         }
 
-        static void DodajPracownika(string DatabasePathPracownikow)
-        {
-            Pracownik pracownikNowy = new Pracownik();
-
-            Console.WriteLine("Podaj ID pracownika: ");
-            pracownikNowy.IdPracownika = Console.ReadLine();
-
-            Console.WriteLine("Podaj ID firmy: ");
-            pracownikNowy.IdFirmy = Console.ReadLine();
-
-            Console.WriteLine("Podaj imię pracownika: ");
-            pracownikNowy.Imie = Console.ReadLine();
-
-            Console.WriteLine("Podaj nazwisko pracownika: ");
-            pracownikNowy.Nazwisko = Console.ReadLine();
-
-            Console.WriteLine("Podaj numer telefonu pracownika: ");
-            pracownikNowy.NrTelefonu = Console.ReadLine();
-
-            Console.WriteLine("Podaj adres e-mail pracownika: ");
-            pracownikNowy.Email = Console.ReadLine();
-
-            SerializePracownik(DatabasePathPracownikow, pracownikNowy);
-
-            ShowPracownicy(DatabasePathPracownikow);
-            ShowMenuPracownicy(DatabasePathPracownikow);
-        }
 
         static bool PokazPracownika(string DatabasePathPracownikow, string id_pracownika)
         {
@@ -157,64 +136,6 @@ namespace KontrahenciPPD_5.Pracownik
             }
         }
 
-        static void ZmienPracownika(string DatabasePathPracownikow)
-        {
-            try
-            {
-                Pracownik pracownikNowy = new Pracownik();
-                InputSimulator sim = new InputSimulator();
-
-                Console.WriteLine("Podaj ID pracownika do zmiany: ");
-                Pracownik pracownikRead = DeserializePracownik(DatabasePathPracownikow, Console.ReadLine());
-                Console.Clear();
-
-                Console.Write("ID pracownika: ");
-                sim.Keyboard.TextEntry(pracownikRead.IdPracownika);
-                pracownikNowy.IdPracownika = Console.ReadLine();
-
-                Console.Write("ID firmy: ");
-                if (pracownikRead.IdFirmy.Length != 0)
-                {
-                    sim.Keyboard.TextEntry(pracownikRead.IdFirmy);
-                }
-                else
-                {
-                    sim.Keyboard.TextEntry("0");
-                }
-                pracownikNowy.IdFirmy = Console.ReadLine();
-
-                Console.Write("Imię pracownika: ");
-                sim.Keyboard.TextEntry(pracownikRead.Imie);
-                pracownikNowy.Imie = Console.ReadLine();
-
-                Console.Write("Nazwisko pracownika: ");
-                sim.Keyboard.TextEntry(pracownikRead.Nazwisko);
-                pracownikNowy.Nazwisko = Console.ReadLine();
-
-                Console.Write("Numer telefonu pracownika: ");
-                sim.Keyboard.TextEntry(pracownikRead.NrTelefonu);
-                pracownikNowy.NrTelefonu = Console.ReadLine();
-
-                Console.Write("Adres e-mail pracownika: ");
-                sim.Keyboard.TextEntry(pracownikRead.Email);
-                pracownikNowy.Email = Console.ReadLine();
-
-                if (pracownikNowy == pracownikRead)
-                {
-                    ShowPracownicy(DatabasePathPracownikow);
-                    ShowMenuPracownicy(DatabasePathPracownikow);
-                }
-                else
-                {
-                    PrzepisaniePracownikow(DatabasePathPracownikow, pracownikRead.IdPracownika, pracownikNowy);
-                    ShowPracownicy(DatabasePathPracownikow);
-                    ShowMenuPracownicy(DatabasePathPracownikow);
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("The process failed: {0}", e.ToString());
-            }
-        }
+        
     }
 }

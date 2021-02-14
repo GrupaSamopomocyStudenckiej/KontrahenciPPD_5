@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace KontrahenciPPD_5.Pracownik
+namespace KontrahenciPPD_5
 {
     [Serializable]
     class Pracownik

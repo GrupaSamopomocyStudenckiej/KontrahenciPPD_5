@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using static KontrahenciPPD_5.Firma.Firma_BIN;
-using static KontrahenciPPD_5.Firma.Firma_F;
-using static KontrahenciPPD_5.Pracownik.Pracownik_BIN;
-using static KontrahenciPPD_5.Pracownik.Pracownik_F;
+using static KontrahenciPPD_5.Firma_BIN;
+using static KontrahenciPPD_5.Firma_F;
+using static KontrahenciPPD_5.Pracownik_BIN;
+using static KontrahenciPPD_5.Pracownik_F;
 
 
 namespace KontrahenciPPD_5
